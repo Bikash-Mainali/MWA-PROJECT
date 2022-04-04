@@ -1,0 +1,93 @@
+### get song
+GET http://localhost:3000/api/songs?count=1a
+
+### add song
+POST http://localhost:3000/api/songs
+Content-Type: application/json
+
+ {
+  "title": "Gravity",
+  "genre": "pop",
+  "releasedDate": "2007-06-01T00:00:00.000Z",
+  "artists": [{
+          "name": "John Mayer ",
+          "role": [
+              "singer",
+              "composer",
+              "writer"
+          ]}
+          ] 
+}
+
+### full update song
+PUT http://localhost:3000/api/songs/624a55422fe439cb6cf82cff
+Content-Type: application/json
+
+{
+  "title": "Gravity",
+  "genre": "pop",
+  "releasedDate": "2008-06-01",
+  "artists":[{"name":"John Dalyan"}]
+}
+
+
+### partial update song
+PATCH http://localhost:3000/api/songs/624a55422fe439cb6cf82cff
+Content-Type: application/json
+
+{
+  "title": "Gravity",
+  "genre": "rock"
+}
+
+### delete song
+DELETE http://localhost:3000/api/songs/624a54342fe439cb6cf82cea
+
+
+### get artist
+GET http://localhost:3000/api/songs/624a55422fe439cb6cf82cff/artists
+
+### add artist
+POST http://localhost:3000/api/songs/624a55422fe439cb6cf82cff/artists
+Content-Type: application/json
+
+ {
+      "name": "Ed Sheren",
+      "role": [
+          "singer",
+          "composer",
+          "writer"
+      ]
+
+}
+
+### full update artist
+PUT http://localhost:3000/api/songs/624a54342fe439cb6cf82cea/artists/624a54342fe439cb6cf82cea
+Content-Type: application/json
+
+{
+  "artists":[
+      {
+          "name":"John Dalyan",
+          "role": ["singer"]
+      }
+      ]
+}
+
+
+### partial update artist
+PATCH http://localhost:3000/api/songs/624a55422fe439cb6cf82cff/artists/624a556c2fe439cb6cf82d07
+Content-Type: application/json
+
+{
+          "name":"John Abraham"
+}
+
+### delete artist
+DELETE http://localhost:3000/api/songs/624a55422fe439cb6cf82cff/artists/624a55f02fe439cb6cf82d13
+
+
+
+
+
+
