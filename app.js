@@ -1,8 +1,8 @@
 "use strict"
 
 require("dotenv").config()
-require("./db_config/db.connection");
-const songRouter = require("./routes/song.routes")
+require("./api/php/db_config/db.connection");
+const songRouter = require("./api/php/routes/song.routes")
 const express = require("express");
 const { Mongoose } = require("mongoose");
 const app = express();

@@ -9,7 +9,6 @@ const express = require("express");
 const songRoutes = express.Router();
 
 
-
 songRoutes.route("/songs")
     .get(songController.getAll)
     .post(songController.addOne)

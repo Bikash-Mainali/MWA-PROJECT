@@ -1,0 +1,43 @@
+<div class="container mt-5" [hidden]="!showAddArtistForm">
+    <h1> Title: {{song.title}}</h1>
+    <hr>
+    <div><span class="text-info text-uppercase fw-bold">Genre: </span> {{song.genre}}<br><br>
+        <span class="text-info text-uppercase fw-bold">Released Date: </span> {{song.releasedDate | date}}<br><br>
+    </div>
+    <div>
+        <span class="text-info text-uppercase fw-bold"> Artists:</span>
+        <ol>
+            <li *ngFor="let artist of song.artists">
+                <span class="fw-bold text-primary">Name: </span>{{artist.name}}<br>
+                <span class="fw-bold text-primary">Roles: </span>{{artist.role}}<br>
+                <br>
+            </li>
+        </ol>
+    </div>
+    <hr>
+    <div>
+        <button class="btn btn-primary me-2" (click)="onDelete(song)">Delete</button>
+        <button class="btn btn-secondary me-2" (click)="onEditSong(song)">Edit Song</button>
+        <button class="btn btn-success me-2" (click)="onEditArtist(song)">Edit Artist</button>
+        <button class="btn btn-dark me-2" routerLink="/songs/{{song._id}}/artists">Add Artist</button>
+    </div>
+</div>
+
+
+
+<app-edit [hidden]="showHideEditForm" [song]="song"></app-edit>
+<app-artist [hidden]="showAddArtistForm" [song]="song" [isEditArtist]="isEditArtist"></app-artist>
+
+<div class="container mt-5" [hidden]="showArtistList">
+    <p class="text-info">Click in name underlined to update artist. If no artist is found then you can add artist</p>
+    <div><span class="text-info text-uppercase fw-bold">Title:</span> {{song.title}}<br>
+    </div>
+    <div>
+        <ol>
+            <li *ngFor="let artist of song.artists">
+                Name:  <a routerLink="/songs/{{song._id}}/artists/{{artist._id}}">{{artist.name}}<br></a>
+                Roles: {{artist.role}}
+            </li>
+        </ol>
+    </div>
+</div>

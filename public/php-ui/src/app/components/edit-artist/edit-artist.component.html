@@ -1,0 +1,26 @@
+<div class="container mt-5 col-md-6 col-sm-12 col-lg-6">
+    <h2>Artist</h2>
+    <span >
+        <p class="text-center" style="color:green; font-size: 30px;" [hidden]="showHideNotification">Succesfull</p>
+    </span>
+    <hr>
+
+    <form [formGroup] = "editFormData" (ngSubmit)="onUpdate()">
+        <div class="form-group">
+            <Label>Name</Label>
+            <input type="text" class="form-control"  formControlName="name" required>
+        </div>
+        <div>
+            <label>Role</label>
+            <ng-select [items]="role" bindLabel="name" placeholder="Select Category" formControlName="role" appendTo="body" [multiple]="true" required>
+            </ng-select>
+            <hr>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary me-3">Submit</button>
+                <button type="submit" class="btn btn-danger me-3" (click)="onDelete(songId, artistId)">Delete</button>
+
+            </div>
+
+    </form>
+</div>

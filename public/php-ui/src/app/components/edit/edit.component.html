@@ -1,0 +1,25 @@
+<div class="container mt-5 col-md-6 col-sm-12 col-lg-6">
+    <h2>Edit Song</h2>
+    <span  [hidden]="showHideNotification">
+        <p class="text-center" style="color:green; font-size: 30px;">Song updated succesfully</p>
+    </span>
+    <hr>
+<form  [formGroup]="editFormData" (ngSubmit)="onUpdate()">
+    <div class="form-group">
+        <Label>Title</Label>
+        <input type="text" class="form-control" id="title" formControlName="title">
+    </div>
+    <div class="form-group">
+        <Label>Genre</Label>
+        <input type="text" class="form-control" formControlName="genre">
+    </div>
+    <div class="form-group">
+        <Label>Released Date</Label>
+        <input type="text" class="form-control" formControlName="releasedDate">
+    </div>
+    <hr>
+    <div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </div>
+</form>
+</div>

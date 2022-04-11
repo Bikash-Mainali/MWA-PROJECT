@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <form #searchCriteria="ngForm" (ngSubmit)="searchSong(searchCriteria)">
+        <div class="row">
+            <div class="form-group col-md-3">
+                <Label>Name</Label>
+                <input type="text" class="form-control" name="title" ngModel>
+            </div>
+            <div class="form-group col-md-3">
+                <Label>Genre</Label>
+                <input type="text" class="form-control" name="genre" ngModel>
+            </div>
+            <div class="form-group col-md-3">
+                <Label>Released Date</Label>
+                <input type="date" class="form-control" name="releasedDate" ngModel>
+            </div>
+            <div class="form-group col-md-3 mt-2">
+                <button type="submit" class="btn btn-primary mt-3">Search</button>
+            </div>
+        </div>
+    </form>
+    <h1 class="mt-5">List of Songs</h1>
+    <hr>
+
+    <ol>
+        <a *ngFor="let song of songs" routerLink="/songs/{{song._id}}">
+            <li>
+                {{song.title}}
+            </li>
+        </a>
+    </ol>
+    <hr>
+</div>

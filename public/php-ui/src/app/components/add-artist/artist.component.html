@@ -1,0 +1,23 @@
+<div class="container mt-5 col-md-6 col-sm-12 col-lg-6">
+    <h2>Artist</h2>
+    <span  [hidden]="showHideNotification">
+        <p class="text-center" style="color:green; font-size: 30px;">Artist added succesfully</p>
+        <p class="text-center">Want to add again?</p>
+    </span>
+    <hr>
+    <form #artistRegistration = "ngForm" (ngSubmit)="addArtist(artistRegistration)">
+        <div class="form-group">
+            <Label>Name</Label>
+            <input type="text" class="form-control"  name="name" ngModel required>
+        </div>
+        <div>
+            <label>Role</label>
+            <ng-select [items]="roles" bindLabel="name" placeholder="Select Category" name="role" appendTo="body" [multiple]="true" ngModel required>
+            </ng-select>
+            <hr>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </div>
+    </form>
+</div>

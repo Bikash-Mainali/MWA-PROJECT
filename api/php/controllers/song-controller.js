@@ -6,6 +6,9 @@
 
 const responseData = require("../dtos/response")
 const Song = require("../models/song-model")
+const mongoose = require("mongoose");
+const ObjectId = require("mongodb").ObjectId;
+
 const getAll = function (req, res) {
     console.log(`Get all, song controller`);
     let count = 5;
@@ -21,20 +24,51 @@ const getAll = function (req, res) {
         count = parseInt(req.query.offset, 10);
     }
 
+    //for multiple filters;
+    let searchQuery = {}
+    if (req.query && (req.query.title || req.query.genre || req.query.releasedDate)) {
+        const searchObj = []
+        if (req.query.title) {
+            searchObj.push({
+                title: {
+                    $regex: req.query.title + ".*"
+                }
+            });
+
+        }
+        if (req.query.genre) {
+            searchObj.push({
+                genre: req.query.genre
+            });
+        }
+        if (req.query.releasedDate) {
+            searchObj.push({
+                releasedDate: req.query.releasedDate
+            })
+        }
+        searchQuery = {
+            $and: searchObj
+        };
+
+    }
+
     if (count > maxCount) {
-        responseData.status = 404;
+        responseData.status = 400;
         responseData.message = `count must be less than ${maxCount}`
         res.status(responseData.status).json(responseData.message);
         return;
 
     }
     if (isNaN(count) || isNaN(offset)) {
-        responseData.status = 404;
+        responseData.status = 400;
         responseData.message = `offset and count must be digit`;
         res.status(responseData.status).json(responseData.message);
         return;
+
     }
-    Song.find().skip(offset).limit(count).exec(function (err, song) {
+
+    console.log(searchQuery.releasedDate)
+    Song.find(searchQuery).sort({_id:-1}).skip(offset).limit(count).exec(function (err, song) {
         if (err) {
             responseData.status = 500;
             responseData.message = err;
@@ -68,34 +102,44 @@ const addOne = function (req, res) {
 const getOne = function (req, res) {
     console.log(`Get one, song controller`);
     const songId = req.params.songId;
-    Song.findById(songId).exec(function (err, song) {
-        const responseData = { status: 200, message: song };
-        if (err) {
-            responseData.status = 500;
-            responseData.message = err;
-        }
-        else if (!song) {
-            responseData.status = 404;
-            responseData.message = { "message": `Song ID ${songId} not found` };
-        }
-        res.status(responseData.status).json(responseData.message);
-    })
+    if (mongoose.isValidObjectId(songId)) {
+        Song.findById(songId).exec(function (err, song) {
+            const responseData = { status: 200, message: song };
+            if (err) {
+                responseData.status = 500;
+                responseData.message = err;
+            }
+            else if (!song) {
+                responseData.status = 404;
+                responseData.message = { "message": `Song ID ${songId} not found` };
+            }
+            res.status(responseData.status).json(responseData.message);
+        })
+    }
+    else {
+        res.status(400).json({ "message": `Song ID is Invalid` });
+    }
 }
 
 const deleteOne = function (req, res) {
     console.log(`Delete one, song controller`);
     const songId = req.params.songId;
-    Song.findByIdAndDelete(songId).exec(function (err, deletedSong) {
-        const responseData = { status: 204, message: { "message": `song with ID : ${songId} successfully deleted` } };
-        if (err) {
-            responseData.status = 500;
-            responseData.message = err
-        } else if (!deletedSong) {
-            responseData.status = 404;
-            responseData.message = { "message": `Song ID ${songId} not found` };
-        }
-        res.json(responseData.message);
-    })
+    if (mongoose.isValidObjectId(songId)) {
+        Song.findByIdAndDelete(songId).exec(function (err, deletedSong) {
+            const responseData = { status: 204, message: deletedSong };
+            if (err) {
+                responseData.status = 500;
+                responseData.message = err
+            } else if (!deletedSong) {
+                responseData.status = 404;
+                responseData.message = `Song ID ${songId} not found`;
+            }
+            res.status(responseData.status).json(responseData.message);
+        })
+    }
+    else {
+        res.status(400).json({ "message": `Song ID is Invalid` });
+    }
 }
 
 const fullUpdateOne = function (req, res) {
@@ -145,22 +189,27 @@ const partialUpdateOne = function (req, res) {
 const _updateOne = function (req, res, updateSongCallBack) {
     console.log(`Put Update one, song controller`);
     const songId = req.params.songId;
-    Song.findById(songId).exec(function (err, song) {
-        const responseData = { status: 204, message: song };
-        if (err) {
-            responseData.status = 500;
-            responseData.message = err;
-        }
-        else if (!song) {
-            responseData.status = 404;
-            responseData.message = { "message": `Song ID ${songId} not found` };
-        }
-        if (responseData.status !== 204) {
-            res.status(responseData.status).json(responseData.message);
-        } else {
-            updateSongCallBack(req, res, song, responseData)
-        }
-    })
+    if (mongoose.isValidObjectId(songId)) {
+        Song.findById(songId).exec(function (err, song) {
+            const responseData = { status: 204, message: song };
+            if (err) {
+                responseData.status = 500;
+                responseData.message = err;
+            }
+            else if (!song) {
+                responseData.status = 404;
+                responseData.message = { "message": `Song ID ${songId} not found` };
+            }
+            if (responseData.status !== 204) {
+                res.status(responseData.status).json(responseData.message);
+            } else {
+                updateSongCallBack(req, res, song, responseData)
+            }
+        })
+    }
+    else {
+        res.status(400).json({ "message": `Song ID is Invalid` });
+    }
 }
 
 

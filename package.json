@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "startBackend":"npm start",
-    "startFrontend":"cd ../public/php-ui && npm start",
+    "startFrontend":"cd ./public/php-ui && npm start",
     "startBoth": "npm-run-all --parallel startBackend startFrontend"
   },
   "keywords": [

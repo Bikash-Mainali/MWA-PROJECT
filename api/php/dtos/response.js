@@ -4,18 +4,13 @@
 
 "use strict"
 
-
-/*
-
 // This can be used for future purpose for hardening
-let responseData = (status, message, data) => {
-    return {
-        "status": status,
-        "message": message,
-        "data": data
+class ResponseModel {
+    constructor(message, data) {
+        this.success = (!data) ? false : true,
+        this.message = message
+        this.data = data;
     }
 }
 
-module.exports = responseData;
-
-*/
+module.exports = ResponseModel

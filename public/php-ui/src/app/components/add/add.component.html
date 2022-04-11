@@ -1,0 +1,22 @@
+<div class="container mt-5 col-md-6 col-sm-12 col-lg-6">
+    <h2>Add Song</h2>
+    <hr>
+<form  [formGroup]="registrationForm" (ngSubmit)="addForm()">
+    <div class="form-group">
+        <Label>Title</Label>
+        <input type="text" class="form-control" id="title" formControlName="title">
+    </div>
+    <div class="form-group">
+        <Label>Genre</Label>
+        <input type="text" class="form-control" formControlName="genre">
+    </div>
+    <div class="form-group">
+        <Label>Released Date</Label>
+        <input type="date" class="form-control" formControlName="releasedDate">
+    </div>
+    <hr>
+    <div>
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+    </div>
+</form>
+</div>
