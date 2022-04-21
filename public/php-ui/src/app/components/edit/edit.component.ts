@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Songs } from 'src/app/models/songs';
 import { SongsService } from 'src/app/services/songs.service';
 
@@ -18,7 +19,8 @@ export class EditComponent implements OnInit {
   showHideNotification: boolean = true;
 
   constructor(private songsService: SongsService,
-    private _router: Router) {
+    private _router: Router,
+    private _toastr: ToastrService) {
 
   }
 
@@ -38,7 +40,8 @@ export class EditComponent implements OnInit {
   onUpdate() {
     this.songsService.updateOne(this.editFormData.value, this.song._id) 
         .subscribe({
-      next: response => {
+      next: songResponse => {
+        this._toastr.success("Song edited successfully")
       },
       error: err => {
         this._router.navigate(["error"])

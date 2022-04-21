@@ -18,37 +18,36 @@ export class SongComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private songService: SongsService,
     private _router: Router,
-   // private toastrService: ToastrService
+   private _toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
     const songId = this.route.snapshot.params["songId"];
     this.songService.getOne(songId).subscribe({
-      next: response => {
-        console.log(response)
-        this.song = response
+      next: songResponse => {
+        console.log(songResponse)
+        this.song = songResponse
+        this._toastr.success("Song fetched successfully")
       },
       error: err => {
-        //this.toastrService.error("Failed")
+        this._toastr.error("Failed")
         this._router.navigate(["error"]);
       },
       complete: () => {
-        //this.toastrService.success("Success")
       }
     })
   }
 
   onDelete(song: any): void {
     this.songService.deleteOne(song._id).subscribe({
-      next: response => {
-        console.log(response);
+      next: songResponse => {
+        this._toastr.success("Song deleted successfully")
       },
       error: err => {
-        //this.toastrService.error("Failed")
         this._router.navigate(["error"]);
+        this._toastr.error("Failed")
       },
       complete: () => {
-        //this.toastrService.success("Success")
         this._router.navigate(["songs"]);
       }
     })

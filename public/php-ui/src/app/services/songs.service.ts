@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AppConstants } from '../constants/appconstants';
 import { Songs } from '../models/songs';
 
 @Injectable({
@@ -11,12 +12,14 @@ export class SongsService {
 
   baseUrl: string = environment.REST_API_URL;
   headers: HttpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"
-  })
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('xAuthToken')
+  });
 
   constructor(private http: HttpClient) { }
 
   getAllSongs(searchFilter:any): Observable<any> {
+    console.log(localStorage.getItem('xAuthToken'))
     let url!:string
     console.log("getting all song: service")
     if(!searchFilter.value){
@@ -25,6 +28,7 @@ export class SongsService {
       console.log(searchFilter.searchCriteria.releasedDate)
       url = this.baseUrl + `/songs?title=${searchFilter.searchCriteria.title}&genre=${searchFilter.searchCriteria.genre}&releasedDate=${searchFilter.searchCriteria.releasedDate}`;
     }
+    console.log(this.headers)
     return this.http.get<any>(url, { headers: this.headers })
   }
 

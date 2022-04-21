@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Artists } from 'src/app/models/artists';
 import { ArtistsService } from 'src/app/services/artists.service';
 
@@ -21,7 +22,8 @@ export class EditArtistComponent implements OnInit {
   songId = this.route.snapshot.params["songId"];
   constructor(private route: ActivatedRoute,
     private artistService: ArtistsService,
-    private _router: Router) {
+    private _router: Router,
+    private _toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -31,19 +33,18 @@ export class EditArtistComponent implements OnInit {
       { name: "Composer" }
     ];
     this.artistService.getOne(this.songId, this.artistId).subscribe({
-      next: response => {
-        console.log(response)
+      next: artistResponse => {
+        this._toastr.success("Artist fetched succesfully")
         this.editFormData = new FormGroup({
-          name: new FormControl(response.name),
-          role: new FormControl(response.role),
+          name: new FormControl(artistResponse.name),
+          role: new FormControl(artistResponse.role),
         })
       },
       error: err => {
-        //this.toastrService.error("Failed")
+        this._toastr.error("Failed")
         this._router.navigate(["error"]);
       },
       complete: () => {
-        //this.toastrService.success("Success")
       }
     })
 
@@ -61,10 +62,12 @@ export class EditArtistComponent implements OnInit {
     let postData = new Artists(this.editFormData.value.name, roleNames)
     this.artistService.updateOne(postData, this.songId, this.artistId)
       .subscribe({
-        next: response => {
+        next: artistResponse => {
+          this._toastr.success("Artist updated succesfully")
         },
         error: err => {
           this._router.navigate(["error"])
+          this._toastr.error("Failed")
         },
         complete: () => {
           this.showHideNotification = false;
@@ -76,15 +79,14 @@ export class EditArtistComponent implements OnInit {
 
   onDelete(songId: string, artistId: string): void {
     this.artistService.deleteOne(songId, artistId).subscribe({
-      next: response => {
-        console.log(response);
+      next: artistResponse => {
+      this._toastr.success("Artist Deleted Successfully")
       },
       error: err => {
-        //this.toastrService.error("Failed")
+        this._toastr.error("Failed")
         this._router.navigate(["error"]);
       },
       complete: () => {
-        //this.toastrService.success("Success")
         // this._router.navigate(["artist"]);
         this.editFormData.reset();
 

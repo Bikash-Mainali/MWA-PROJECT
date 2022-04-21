@@ -1,6 +1,13 @@
-<nav>
-    <a class="navbar-brand" href="">Personal Hobby Project</a>
-    <button class="btn btn-primary me-2" (click)="onHome()">Home</button>
-    <button class="btn btn-primary me-2" (click)="onSongs()">Songs</button>
-    <button class="btn btn-success me-2" (click)="onAdd()">Add</button>
+<nav class="navbar navbar-light bg-light">
+    <div>
+        <a class="navbar-brand" routerLink="/home">Personal Hobby Project</a>
+        <button class="btn btn-primary me-2" (click)="onHome()">Home</button>
+        <button class="btn btn-primary me-2" (click)="onSongs()">Songs</button>
+        <button class="btn btn-success me-2" (click)="onAdd()">Add</button>
+        <button class="btn btn-secondary me-2" (click)="onRegister()">Register</button>
+        <button class="btn btn-dark me-2" (click)="onLogout()">Profile</button>
+    </div>
+    <div class="d-flex">
+        <button class="btn btn-dark me-2 float-right" routerLink="/login">Logout</button>
+    </div>
 </nav>

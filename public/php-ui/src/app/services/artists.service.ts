@@ -2,6 +2,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AppConstants } from '../constants/appconstants';
 import { Artists } from '../models/artists';
 
 @Injectable({
@@ -10,9 +11,7 @@ import { Artists } from '../models/artists';
 export class ArtistsService {
 
   baseUrl: string = environment.REST_API_URL;
-  headers: HttpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"
-  })
+  headers: HttpHeaders = AppConstants.headers;
 
   constructor(private http: HttpClient) { }
 

@@ -6,10 +6,21 @@ import { ErrorPageComponent } from "./components/error-page/error-page.component
 import { HomeComponent } from "./components/home/home.component";
 import { SongComponent } from "./components/song/song.component";
 import { SongsComponent } from "./components/songs/songs.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { LoginComponent } from "./components/login/login.component";
+import { ProfileComponent } from "./components/profile/profile.component";
 
 const routes: Routes = [
     {
         path: "",
+        component: LoginComponent
+    },
+    {
+        path: "login",
+        component: LoginComponent
+    },
+    {
+        path: "home",
         component: HomeComponent
     },
     {
@@ -35,6 +46,14 @@ const routes: Routes = [
     {
         path: "songs/:songId/artists/:artistId",
         component: EditArtistComponent
+    },
+    {
+        path: "register",
+        component: RegisterComponent
+    },
+    {
+        path: "profile",
+        component: ProfileComponent
     },
     {
         path: "error",

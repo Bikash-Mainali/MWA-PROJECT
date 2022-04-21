@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Form 1</title>
+</head>
+<!-- <nav>
+    <a class="navbar-brand" href="/login">Personal Hobby Project</a>s
+</nav> -->
+<body class="d-flex justify-content-center">
+    <form class="col-md-4 m-5" #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+        <div *ngIf="loginError" class="alert alert-danger text-center fw-bold fs-3 mt-1">{{loginErrorMessage}}</div>
+        <div class="form-group mb-4">
+            <label for="name">
+                Name<span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control mt-1" name="name" placeholder="name" required ngModel>
+        </div>
+        <div class="form-group mb-4">
+            <label for="username">
+                User Name<span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control mt-1" name="username" placeholder="username" required ngModel>
+        </div>
+        <div class="form-group mb-4">
+            <label for="password">
+                Password<span class="text-danger">*</span>
+            </label>
+            <input type="password" class="form-control mt-1" name="password" placeholder="password" required ngModel>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary col-md-12 mt-3">Login</button>
+        </div>
+    </form>
+</body>
+</html>
